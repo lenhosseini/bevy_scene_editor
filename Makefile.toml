@@ -1,0 +1,8 @@
+[tasks.start]
+command = "cargo"
+args = ["run", "--features", "bevy/dynamic_linking"]
+
+[tasks.dev]
+install_crate = "cargo-watch"
+command = "cargo"
+args = ["watch", "-x", "run", "--features", "bevy/dynamic_linking"]
