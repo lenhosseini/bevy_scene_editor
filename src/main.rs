@@ -1,15 +1,16 @@
 use bevy::{
     prelude::*,
-    window::{WindowLevel, WindowResolution},
+    window::{PresentMode, WindowLevel, WindowResolution},
 };
-
 use bevy_egui::EguiPlugin;
-use bevy_scene_editor::{SceneEditorAsset, SceneEditorPlugin, SceneEditorSettings};
+use bevy_mod_picking::prelude::*;
+use bevy_scene_editor::prelude::*;
 
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins.set(WindowPlugin {
             primary_window: Some(Window {
+                present_mode: PresentMode::AutoNoVsync,
                 title: "Bevy Scene Editor".into(),
                 resolution: WindowResolution::new(800., 600.),
                 window_level: WindowLevel::AlwaysOnTop,
@@ -18,13 +19,8 @@ fn main() {
             }),
             ..default()
         }))
+        .add_plugins(DefaultPickingPlugins)
         .add_plugin(EguiPlugin)
-        .add_plugin(SceneEditorPlugin {
-            settings: SceneEditorSettings {
-                images: Some(SceneEditorAsset::Folder("textures".into())),
-                ..default()
-            },
-        })
-        .add_system(bevy::window::close_on_esc)
+        .add_plugin(SceneEditorPlugin)
         .run();
 }
